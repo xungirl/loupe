@@ -1,0 +1,422 @@
+/* Trace page: header, waterfall, span panel, agent tree, findings. */
+
+.crumbs {
+  font-size: 13px;
+}
+.trace-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.trace-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* waterfall + optional side panel */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.split.has-panel {
+  grid-template-columns: minmax(0, 1fr) min(380px, 36%);
+}
+.split-main {
+  overflow: hidden;
+}
+
+/* ---------- waterfall ----------
+   Every row is a 2-column grid: [label | timeline]. The timeline column is
+   position:relative, and bars are absolutely positioned with left/width in %
+   (computed by barPosition in waterfallLayout.ts). */
+.waterfall {
+  --wf-label: 38%;
+  --wf-row: 26px;
+}
+.wf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.legend {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.wf-grid {
+  display: grid;
+  grid-template-columns: var(--wf-label) minmax(0, 1fr);
+}
+.wf-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.wf-header .wf-label {
+  padding: 7px 12px;
+}
+.wf-axis {
+  position: relative;
+  margin: 0 64px 0 8px; /* right margin leaves room for duration labels */
+}
+.wf-tick {
+  position: absolute;
+  top: 7px;
+  transform: translateX(-50%);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.wf-tick:first-child {
+  transform: none;
+}
+
+.wf-body {
+  max-height: calc(100vh - 330px);
+  min-height: 240px;
+  overflow-y: auto;
+}
+.wf-rows {
+  position: relative; /* the gridline overlay stretches over all rows */
+}
+.wf-gridlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.wf-gridlines .wf-track {
+  margin: 0 64px 0 8px;
+  height: 100%;
+}
+.wf-gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+  opacity: 0.7;
+}
+
+.wf-row {
+  position: relative;
+  height: var(--wf-row);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.wf-row:hover {
+  background: color-mix(in srgb, var(--surface-hover) 80%, transparent);
+}
+.wf-row.is-selected {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+.wf-row.is-highlighted {
+  background: var(--highlight);
+  border-left-color: #f59e0b;
+}
+.wf-row.is-error .wf-name {
+  color: var(--red);
+}
+
+.wf-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid var(--border);
+  padding-right: 8px;
+}
+.wf-row .wf-label {
+  font-size: 12.5px;
+}
+.wf-caret {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 16px;
+  flex: none;
+}
+.wf-caret:hover {
+  color: var(--text);
+}
+.wf-caret-spacer {
+  width: 16px;
+  flex: none;
+}
+.wf-name {
+  flex: none; /* keep the span name whole; the detail text shrinks instead */
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.wf-detail {
+  min-width: 0;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11.5px;
+}
+.wf-flag {
+  color: #f59e0b;
+  font-size: 11px;
+  flex: none;
+}
+
+.wf-track {
+  position: relative;
+  margin: 0 64px 0 8px;
+}
+.wf-bar {
+  position: absolute;
+  top: 7px;
+  height: 12px;
+  border-radius: 3px;
+  min-width: 2px;
+  opacity: 0.9;
+}
+.wf-row:hover .wf-bar,
+.wf-row.is-selected .wf-bar {
+  opacity: 1;
+}
+.kind-bg-agent {
+  background: var(--c-agent);
+}
+.kind-bg-llm {
+  background: var(--c-llm);
+}
+.kind-bg-tool {
+  background: var(--c-tool);
+}
+.kind-bg-step {
+  background: var(--c-step);
+}
+.kind-bg-event {
+  background: var(--c-event);
+}
+.wf-bar-error {
+  background: var(--c-error);
+  background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(255, 255, 255, 0.25) 4px 6px);
+}
+.wf-dur {
+  position: absolute;
+  top: 5px;
+  padding: 0 6px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.wf-dur-inside {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ---------- span side panel ---------- */
+.span-panel {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.span-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.span-panel-head h3 {
+  margin-top: 6px;
+  word-break: break-word;
+}
+.kv {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.kv-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 12.5px;
+}
+.kv-row dt {
+  color: var(--muted);
+}
+.kv-row dd {
+  margin: 0;
+  word-break: break-all;
+}
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.panel-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.panel-finding {
+  font-size: 12.5px;
+}
+.code-block {
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow: auto;
+}
+
+/* ---------- agent tree ---------- */
+.agent-tree p {
+  margin: 0 0 10px;
+}
+.tree-scroll {
+  overflow: auto;
+  background-color: var(--surface-2);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+.tree-edge {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 2;
+}
+.tree-node {
+  cursor: pointer;
+}
+.tree-box {
+  fill: var(--surface);
+  stroke: var(--border-strong);
+  stroke-width: 1;
+  filter: drop-shadow(0 1px 2px rgba(16, 24, 40, 0.08));
+}
+.tree-node:hover .tree-box {
+  stroke: var(--accent);
+}
+.tree-node.is-selected .tree-box {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.tree-node.has-errors .tree-box {
+  stroke: var(--red-border);
+}
+.tree-node:focus {
+  outline: none;
+}
+.tree-node:focus-visible .tree-box {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.tree-title {
+  font-size: 14px;
+  font-weight: 600;
+  fill: var(--text);
+}
+.tree-meta {
+  font-size: 12px;
+  fill: var(--text-2);
+}
+.tree-faint {
+  fill: var(--faint);
+  font-size: 11px;
+}
+.tree-err {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--red);
+}
+
+/* ---------- findings list (trace tab) ---------- */
+.finding-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.finding-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+.finding-item:hover {
+  border-color: var(--border-strong);
+}
+.finding-item.is-active {
+  background: var(--highlight);
+  border-color: var(--amber-border);
+}
+.finding-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.finding-time {
+  margin-left: auto;
+}
+.finding-summary {
+  margin-top: 6px;
+}
+.findings-empty {
+  padding: 16px 0;
+}

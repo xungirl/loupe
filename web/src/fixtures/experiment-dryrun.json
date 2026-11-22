@@ -1,0 +1,30 @@
+{
+  "run_id": "FIXTURE-dryrun-0000",
+  "provider": "fake",
+  "model": "fake-deterministic",
+  "is_dry_run": true,
+  "created_at": "2026-11-22T00:00:00Z",
+  "tasks": 4,
+  "arms": ["A", "B", "C"],
+  "arm_labels": { "A": "single agent", "B": "single agent + restate task", "C": "planner/coder/reviewer" },
+  "runs_completed": 12,
+  "runs_planned": 12,
+  "spend": { "currency": "CNY", "spent": 0, "cap": 4.5 },
+  "summary_by_arm": [
+    { "arm": "A", "n": 4, "pass_rate": 0.5, "pass_ci95": [0.15, 0.85], "mean_tokens": 12000, "mean_cost_cny": 0.0, "mean_steps": 9.5, "mean_rework": 1.25, "mean_wall_s": 0.4, "loop_findings": 1 },
+    { "arm": "B", "n": 4, "pass_rate": 0.75, "pass_ci95": [0.3, 0.95], "mean_tokens": 13000, "mean_cost_cny": 0.0, "mean_steps": 8.0, "mean_rework": 0.75, "mean_wall_s": 0.4, "loop_findings": 0 },
+    { "arm": "C", "n": 4, "pass_rate": 0.75, "pass_ci95": [0.3, 0.95], "mean_tokens": 31000, "mean_cost_cny": 0.0, "mean_steps": 14.0, "mean_rework": 0.5, "mean_wall_s": 0.9, "loop_findings": 0 }
+  ],
+  "paired": [
+    { "comparison": "B-A", "metric": "pass_rate", "diff": 0.25, "ci95": [-0.25, 0.75], "n_tasks": 4, "wins": 1, "losses": 0, "ties": 3 },
+    { "comparison": "C-A", "metric": "pass_rate", "diff": 0.25, "ci95": [-0.25, 0.75], "n_tasks": 4, "wins": 1, "losses": 0, "ties": 3 }
+  ],
+  "per_task": [
+    { "task": "fixture-t1", "A": { "passed": true, "tokens": 10000, "steps": 8, "rework": 0 }, "B": { "passed": true, "tokens": 11000, "steps": 7, "rework": 0 }, "C": { "passed": true, "tokens": 30000, "steps": 13, "rework": 0 } },
+    { "task": "fixture-t2", "A": { "passed": false, "tokens": 14000, "steps": 11, "rework": 3 }, "B": { "passed": true, "tokens": 15000, "steps": 9, "rework": 1 }, "C": { "passed": true, "tokens": 32000, "steps": 15, "rework": 1 } },
+    { "task": "fixture-t3", "A": { "passed": true, "tokens": 11000, "steps": 9, "rework": 1 }, "B": { "passed": true, "tokens": 12000, "steps": 8, "rework": 1 }, "C": { "passed": false, "tokens": 30000, "steps": 14, "rework": 1 } },
+    { "task": "fixture-t4", "A": { "passed": false, "tokens": 13000, "steps": 10, "rework": 1 }, "B": { "passed": false, "tokens": 14000, "steps": 8, "rework": 1 } }
+  ],
+  "planning_estimate": { "label": "FIXTURE numbers", "tokens_per_run_by_arm": { "A": 12000, "B": 13000, "C": 31000 }, "projected_cost_cny": 1.23 },
+  "notes": ["FIXTURE for web UI unit tests only. Made-up numbers; not produced by the harness and not a result."]
+}
