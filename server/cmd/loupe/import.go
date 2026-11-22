@@ -73,6 +73,7 @@ func runImportClaude(args []string) error {
 	dbPath := fs.String("db", "data/local.db", "SQLite database to write (ignored with -url)")
 	url := fs.String("url", "", "send to a running Loupe server instead, e.g. http://127.0.0.1:7070")
 	pricesPath := fs.String("prices", "", "price table JSON (default: built-in)")
+	dry := fs.Bool("dry", false, "parse and convert only, write nothing (benchmarks the parser)")
 	_ = fs.Parse(args)
 
 	prices := cost.Default()
@@ -83,6 +84,9 @@ func runImportClaude(args []string) error {
 		}
 	}
 	sink, closeFn, err := openSink(*dbPath, *url)
+	if *dry {
+		sink, closeFn, err = func([]model.Span) error { return nil }, func() {}, nil
+	}
 	if err != nil {
 		return err
 	}
@@ -97,7 +101,9 @@ func runImportClaude(args []string) error {
 		fmt.Fprintf(os.Stderr, "parse stats:\n%s\n", out)
 		fmt.Fprintf(os.Stderr, "imported %d spans from %d sessions (%.1f MB) in %s; %d LLM spans had a model missing from the price table\n",
 			st.Spans, st.Sessions, float64(st.Bytes)/1e6, elapsed.Round(time.Millisecond), unpriced)
-		if *url == "" {
+		fmt.Printf("{\"files\":%d,\"bytes\":%d,\"lines\":%d,\"spans\":%d,\"seconds\":%.3f,\"dry\":%v}\n",
+			st.Files, st.Bytes, st.Lines, st.Spans, elapsed.Seconds(), *dry)
+		if *url == "" && !*dry {
 			fmt.Fprintf(os.Stderr, "database: %s  →  view it with: bin/loupe serve -db %s -web web/dist\n", *dbPath, *dbPath)
 		}
 	}
