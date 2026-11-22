@@ -47,14 +47,14 @@ project). Replace the path if you cloned Loupe somewhere else.
 ```json
 {
   "hooks": {
-    "SessionStart":     [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "PreToolUse":       [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "PostToolUse":      [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "Notification":     [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "Stop":             [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "SubagentStop":     [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }],
-    "SessionEnd":       [{ "hooks": [{ "type": "command", "command": "python3 /Users/xunxun/loupe/importers/claude_hook.py", "timeout": 5 }] }]
+    "SessionStart":     [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "PreToolUse":       [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "PostToolUse":      [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "Notification":     [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "Stop":             [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "SubagentStop":     [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }],
+    "SessionEnd":       [{ "hooks": [{ "type": "command", "command": "python3 /path/to/loupe/importers/claude_hook.py", "timeout": 5 }] }]
   }
 }
 ```
