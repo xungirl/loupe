@@ -240,7 +240,7 @@ Claude Code 转录 ─┐            ┌─ SDK(OTLP JSON) ─┐   hook 脚本 
 ### 21. 页面（`web/src/pages/`）
 
 - **TracePage**：瀑布图 / agent 树 / findings 三个标签页；`?finding=123` 会高亮该 finding 涉及的 span，`?agent=` 只显示某个 agent 的 span——状态放在 URL 里，所以每个视图都能直接分享链接。
-- **LivePage**：`new EventSource('/api/v1/live')`，收到 `span` 事件就加到列表头部（上限约 500 条）；**组件卸载时 `close()`**，否则浏览器会一直占着这条长连接；暂停时只是不渲染，不断开。
+- **LivePage**：`new EventSource('/api/v1/live')`，收到 `span` 事件就加到列表头部（上限约 500 条）；**组件卸载时 `close()`**，否则浏览器会一直占着这条长连接；暂停时新 span 先放进缓冲区（用 `useRef` 保存，事件回调里读最新的 paused 状态），恢复后一起显示，连接不断开。
 - **ExperimentsPage**：渲染所有实验报告；`provider == "fake"` 或 `is_dry_run` 时显示醒目的「DRY RUN」横幅（有单元测试断言这个横幅）。
 - **JourneyPage**：竖线 + 渐变圆点的路线图（完成=亮，未完成=灰）。滚动时竖线按滚动位置「填充」渐变，`IntersectionObserver` 在卡片第一次进入视口时加上 `is-visible` 类触发淡入；没有 IntersectionObserver 的环境（老浏览器、测试）直接全部显示。数据在 `src/journey.ts`，改文字不用碰组件。
 
