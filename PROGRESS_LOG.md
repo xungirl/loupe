@@ -5,3 +5,4 @@ Times are PST (America/Los_Angeles).
 
 - 2026-11-22 01:58 — started. Repo initialised at /Users/xunxun/loupe (branch main). Go module lives in `server/` (single `loupe` binary with subcommands). SQLite driver: modernc.org/sqlite (pure Go, no cgo — `go test -race` and cross-builds stay simple; trade-off: slower than mattn/go-sqlite3).
 - 2026-11-22 02:14 — stage 1 done (tag stage-1): model/store/ingest/otlp/assemble + HTTP ingest. `go test -race -count=3 ./...` green. Query API/SSE/stats handlers were written alongside (tests in api_test.go) and get finished in stage 3.
+- 2026-11-22 02:17 — stage 2 done (tag stage-2): importer + hook adapter + docs/hooks.md. Python pinned to 3.15 via .python-version (uv had defaulted to 3.13).

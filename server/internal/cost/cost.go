@@ -9,6 +9,7 @@ package cost
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"sort"
 	"strings"
@@ -57,13 +58,14 @@ func Load(path string) (*Table, error) {
 func Default() *Table {
 	usd := func(prefix string, in, out, cacheRead float64) Price {
 		if cacheRead == 0 {
-			cacheRead = in * 0.1
+			cacheRead = round6(in * 0.1)
 		}
-		return Price{Prefix: prefix, Currency: "USD", Input: in, Output: out, CacheRead: cacheRead, CacheWrite: in * 1.25}
+		return Price{Prefix: prefix, Currency: "USD", Input: in, Output: out, CacheRead: cacheRead, CacheWrite: round6(in * 1.25)}
 	}
 	t := &Table{
 		USDPerCNY: 0.14,
-		Source:    "built-in defaults (see config/prices.json)",
+		Source: "Claude: Anthropic first-party list prices per 1M tokens (as cached 2026-11-03), cache write = 1.25x input, " +
+			"cache read = 0.1x input unless listed; Qwen: DashScope prices given for this project; usd_per_cny is a user setting",
 		Prices: []Price{
 			usd("claude-opus-5-5", 4, 20, 0.20),
 			usd("claude-opus-5", 5, 25, 0),
@@ -82,6 +84,8 @@ func Default() *Table {
 	t.sortPrefixes()
 	return t
 }
+
+func round6(x float64) float64 { return math.Round(x*1e6) / 1e6 }
 
 func (t *Table) sortPrefixes() {
 	// Longest prefix first so "claude-opus-5-5" wins over "claude-opus-5".
