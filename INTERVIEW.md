@@ -220,9 +220,34 @@ Claude Code 转录 ─┐            ┌─ SDK(OTLP JSON) ─┐   hook 脚本 
 
 ## 第三部分：前端（`web/`）
 
-（见 `web/README.md`。重点会讲：`src/api.ts` 的类型化客户端；瀑布图里 bar 的 `left = (start - traceStart) / traceDuration`、`width = duration / traceDuration` 的布局计算；agent 树的自顶向下布局；Live 页 `EventSource` 在组件卸载时 `close()`，避免泄漏连接；Journey 页滚动动画用 IntersectionObserver。）
+技术栈：React 19 + TypeScript + Vite，**不用 UI 组件库、图表库、状态管理库**——函数组件 + hooks + `react-router-dom` + 手写 SVG + 几个普通 CSS 文件（CSS 变量做主题）。依赖少，每一行都讲得清。
 
----
+### 19. `web/src/api.ts` + `useApi.ts` + `format.ts`
+
+**(a) 骨架**：`api.ts` 是类型化的 API 客户端（和 Go 的 JSON 结构一一对应的 TypeScript 类型 + 每个接口一个函数，URL 都是相对路径 `/api/...`）；`useApi(loader, deps)` 是一个很小的取数 hook，返回 `{data, error, loading, reload}`；`format.ts` 放所有格式化（纳秒→「3.4 s」、1.2M token、美元精度、相对时间）。
+
+**(b) 为什么**：相对 URL 让同一份构建产物既能在 Vite 开发服务器（代理到 Go）下跑，也能被 Go 二进制直接托管。时间统一用纳秒（和后端一致），只在显示时转换，避免到处换算单位出错。
+
+**(c) 语法**：`useEffect` 里发请求，返回清理函数忽略过期响应（组件卸载或依赖变化后不再 setState）；泛型 `useApi<T>`。
+
+### 20. `web/src/trace/waterfallLayout.ts`、`treeLayout.ts` —— 纯函数布局（有单元测试）
+
+**(a) 骨架**：瀑布图每个 bar 的位置：
+`left = (span.start − trace.start) / traceDuration`，`width = (span.end − span.start) / traceDuration`，都夹在 [0,100]%，宽度有下限（0 ms 的事件也看得见），下限会把 bar 推出右边时就整体左移。`visibleRows` 根据折叠集合算出哪些行可见（折叠一个节点 = 跳过它的整个子树，子树就是 DFS 顺序里紧跟其后、深度更大的连续行）。`treeLayout.ts` 是自顶向下的整齐树布局：叶子从左到右依次占位，父节点放在子节点的中间。
+
+**(b) 为什么**：把布局数学从 React 组件里拆成**不依赖 React 的纯函数**，就能直接写单元测试（Vitest 里测 left/width、折叠、坐标轴刻度、树坐标），组件只负责渲染。后端返回的 span 已经是 DFS 顺序，所以前端不用再建树。
+
+### 21. 页面（`web/src/pages/`）
+
+- **TracePage**：瀑布图 / agent 树 / findings 三个标签页；`?finding=123` 会高亮该 finding 涉及的 span，`?agent=` 只显示某个 agent 的 span——状态放在 URL 里，所以每个视图都能直接分享链接。
+- **LivePage**：`new EventSource('/api/v1/live')`，收到 `span` 事件就加到列表头部（上限约 500 条）；**组件卸载时 `close()`**，否则浏览器会一直占着这条长连接；暂停时只是不渲染，不断开。
+- **ExperimentsPage**：渲染所有实验报告；`provider == "fake"` 或 `is_dry_run` 时显示醒目的「DRY RUN」横幅（有单元测试断言这个横幅）。
+- **JourneyPage**：竖线 + 渐变圆点的路线图（完成=亮，未完成=灰）。滚动时竖线按滚动位置「填充」渐变，`IntersectionObserver` 在卡片第一次进入视口时加上 `is-visible` 类触发淡入；没有 IntersectionObserver 的环境（老浏览器、测试）直接全部显示。数据在 `src/journey.ts`，改文字不用碰组件。
+
+### 22. 测试
+
+- Vitest（jsdom + Testing Library）：格式化函数、布局数学、实验页渲染。
+- Playwright（`web/e2e/`）：`start-server.sh` 先编译 Go、重建一个演示库、带 `-demo-live` 起服务，然后测：会话列表筛选、打开 trace、多 agent 树（3 个节点）、findings 跳转高亮、Live 页在 20 秒内收到 span、Insights、Journey、实验页、404。截图也由 Playwright 生成。
 
 ## 第四部分：面试问答（基于代码）
 
