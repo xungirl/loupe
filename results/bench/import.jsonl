@@ -1,0 +1,6 @@
+{"label":"rep1 write","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":1.904,"dry":false}
+{"label":"rep1 parse-only","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":0.771,"dry":true}
+{"label":"rep2 write","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":1.724,"dry":false}
+{"label":"rep2 parse-only","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":0.739,"dry":true}
+{"label":"rep3 write","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":1.718,"dry":false}
+{"label":"rep3 parse-only","files":620,"bytes":86336607,"lines":172819,"spans":115460,"seconds":0.783,"dry":true}

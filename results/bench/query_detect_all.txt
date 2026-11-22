@@ -1,0 +1,4 @@
+ran detectors on 24201 traces: 20192 findings
+real 7.50
+user 6.31
+sys 1.38

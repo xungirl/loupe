@@ -1,0 +1,6 @@
+date: 2026-11-22 02:49 PST
+cpu: Apple M2 (8 cores)
+mem: 24 GB
+os: macOS 27.2.1
+go: go1.27.4
+git: 7586782

@@ -1,0 +1,9 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/xungirl/loupe/server/internal/assemble
+cpu: Apple M2
+BenchmarkBuild10k-8   	     452	   2622000 ns/op	 5960454 B/op	   22623 allocs/op
+BenchmarkBuild10k-8   	     501	   2888389 ns/op	 5960440 B/op	   22623 allocs/op
+BenchmarkBuild10k-8   	     409	   2490769 ns/op	 5960439 B/op	   22623 allocs/op
+PASS
+ok  	github.com/xungirl/loupe/server/internal/assemble	4.755s

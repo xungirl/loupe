@@ -1,0 +1,1 @@
+generated 1017547 spans in 7.269s (139987 spans/s bulk insert, single process, no HTTP)

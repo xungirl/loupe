@@ -1,0 +1,3 @@
+rep1 max_rss_kb= 62768
+rep2 max_rss_kb= 59488
+rep3 max_rss_kb= 63680
