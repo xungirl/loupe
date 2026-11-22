@@ -65,7 +65,8 @@ func Default() *Table {
 	t := &Table{
 		USDPerCNY: 0.14,
 		Source: "Claude: Anthropic first-party list prices per 1M tokens (as cached 2026-11-03), cache write = 1.25x input, " +
-			"cache read = 0.1x input unless listed; Qwen: DashScope prices given for this project; usd_per_cny is a user setting",
+			"cache read = 0.1x input unless listed; Qwen: DashScope prices given for this project; usd_per_cny is a user setting; " +
+			"sim-* is a made-up price for synthetic demo traces",
 		Prices: []Price{
 			usd("claude-opus-5-5", 4, 20, 0.20),
 			usd("claude-opus-5", 5, 25, 0),
@@ -79,6 +80,8 @@ func Default() *Table {
 			usd("claude-haiku-4-5", 1, 5, 0),
 			{Prefix: "qwen3.8-flash", Currency: "CNY", Input: 0.8, Output: 2.7},
 			{Prefix: "fake-", Currency: "USD"}, // the deterministic fake provider is free
+			// Synthetic corpus/demo traces only: a made-up price so the demo's cost views are not all zero.
+			{Prefix: "sim-", Currency: "USD", Input: 1, Output: 5, CacheRead: 0.1, CacheWrite: 1.25},
 		},
 	}
 	t.sortPrefixes()

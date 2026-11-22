@@ -66,9 +66,9 @@ func DefaultConfig() Config {
 	return Config{
 		LoopMinRepeats: 3, LoopWindow: 8, LoopSimilarity: 0.8,
 		ReworkMinEdits: 5, ReworkMinCycles: 3,
-		StreakMin:      3,
-		StuckMinCalls:  13,
-		BudgetTokens:   1_500_000, BudgetGrowth: 5, BudgetMinCalls: 6,
+		StreakMin:     3,
+		StuckMinCalls: 13,
+		BudgetTokens:  1_500_000, BudgetGrowth: 5, BudgetMinCalls: 6,
 	}
 }
 

@@ -9,7 +9,7 @@ import (
 
 func TestSlowSubscriberDropsInsteadOfBlocking(t *testing.T) {
 	b := NewBroker(2)
-	slow := b.Subscribe("")      // never reads
+	slow := b.Subscribe("")       // never reads
 	filtered := b.Subscribe("t2") // only trace t2
 	spans := []model.Span{{TraceID: "t1", SpanID: "a"}, {TraceID: "t1", SpanID: "b"}, {TraceID: "t1", SpanID: "c"}, {TraceID: "t2", SpanID: "d"}}
 	done := make(chan struct{})

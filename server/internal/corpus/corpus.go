@@ -114,7 +114,7 @@ func (s *sim) llm() {
 	in := int64(s.ctx)
 	cached := in * int64(50+s.r.Intn(40)) / 100 // prompt caching: most of the context is a cache read
 	s.spans = append(s.spans, model.Span{TraceID: s.trace, SpanID: s.id(), ParentSpanID: s.agentSpan, Kind: model.KindLLM,
-		Name: "llm", Model: "fake-sim-1", AgentID: s.agentID, AgentName: s.agentName, StartNS: start, EndNS: s.now,
+		Name: "llm", Model: "sim-agent-1", AgentID: s.agentID, AgentName: s.agentName, StartNS: start, EndNS: s.now,
 		InputTokens: in - cached, CacheReadTokens: cached, OutputTokens: out})
 	s.ctx += float64(out) + s.growth()
 }

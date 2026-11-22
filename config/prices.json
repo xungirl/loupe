@@ -1,6 +1,6 @@
 {
   "usd_per_cny": 0.14,
-  "source": "Claude: Anthropic first-party list prices per 1M tokens (as cached 2026-11-03), cache write = 1.25x input, cache read = 0.1x input unless listed; Qwen: DashScope prices given for this project; usd_per_cny is a user setting",
+  "source": "Claude: Anthropic first-party list prices per 1M tokens (as cached 2026-11-03), cache write = 1.25x input, cache read = 0.1x input unless listed; Qwen: DashScope prices given for this project; usd_per_cny is a user setting; sim-* is a made-up price for synthetic demo traces",
   "prices": [
     {
       "prefix": "claude-sonnet-5-5",
@@ -97,6 +97,14 @@
       "output": 0,
       "cache_read": 0,
       "cache_write": 0
+    },
+    {
+      "prefix": "sim-",
+      "currency": "USD",
+      "input": 1,
+      "output": 5,
+      "cache_read": 0.1,
+      "cache_write": 1.25
     }
   ]
 }

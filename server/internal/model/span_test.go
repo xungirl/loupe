@@ -14,17 +14,17 @@ func valid() Span {
 
 func TestNormalizeRejects(t *testing.T) {
 	cases := map[string]func(*Span){
-		"missing trace id":  func(s *Span) { s.TraceID = "" },
-		"missing span id":   func(s *Span) { s.SpanID = "" },
-		"own parent":        func(s *Span) { s.ParentSpanID = s.SpanID },
-		"unknown kind":      func(s *Span) { s.Kind = "banana" },
-		"zero start":        func(s *Span) { s.StartNS = 0 },
-		"end before start":  func(s *Span) { s.EndNS = s.StartNS - 1 },
-		"negative tokens":   func(s *Span) { s.InputTokens = -1 },
-		"negative cost":     func(s *Span) { s.CostUSD = -0.1 },
-		"bad status":        func(s *Span) { s.Status = "meh" },
-		"far future":        func(s *Span) { s.StartNS = now + 48*3600*1e9; s.EndNS = s.StartNS },
-		"id too long":       func(s *Span) { s.SpanID = strings.Repeat("x", MaxIDLen+1) },
+		"missing trace id": func(s *Span) { s.TraceID = "" },
+		"missing span id":  func(s *Span) { s.SpanID = "" },
+		"own parent":       func(s *Span) { s.ParentSpanID = s.SpanID },
+		"unknown kind":     func(s *Span) { s.Kind = "banana" },
+		"zero start":       func(s *Span) { s.StartNS = 0 },
+		"end before start": func(s *Span) { s.EndNS = s.StartNS - 1 },
+		"negative tokens":  func(s *Span) { s.InputTokens = -1 },
+		"negative cost":    func(s *Span) { s.CostUSD = -0.1 },
+		"bad status":       func(s *Span) { s.Status = "meh" },
+		"far future":       func(s *Span) { s.StartNS = now + 48*3600*1e9; s.EndNS = s.StartNS },
+		"id too long":      func(s *Span) { s.SpanID = strings.Repeat("x", MaxIDLen+1) },
 	}
 	for name, mutate := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -65,9 +65,9 @@ func TestExtractTarget(t *testing.T) {
 	cases := map[string]string{
 		`{"file_path":"/a/b.py","old_string":"x"}`: "/a/b.py",
 		`{"command":"go   test\n ./..."}`:          "go test ./...",
-		`{"pattern":"TODO"}`:                      "TODO",
-		`not json`:                                "",
-		`{"other":1}`:                             "",
+		`{"pattern":"TODO"}`:                       "TODO",
+		`not json`:                                 "",
+		`{"other":1}`:                              "",
 	}
 	for in, want := range cases {
 		if got := ExtractTarget(in); got != want {

@@ -34,7 +34,7 @@ func runServe(args []string) error {
 	fs.IntVar(&cfg.QueueSpans, "queue", cfg.QueueSpans, "ingest queue capacity in spans (beyond this → HTTP 429)")
 	fs.IntVar(&cfg.MaxBatch, "batch", cfg.MaxBatch, "max spans per write transaction")
 	fs.DurationVar(&cfg.FlushInterval, "flush", cfg.FlushInterval, "max time a span waits for its batch")
-	retention := fs.Duration("retention", 30*24*time.Hour, "delete traces older than this (0 = keep forever)")
+	retention := fs.Duration("retention", 0, "delete traces older than this, e.g. 720h (default 0 = keep forever, so imported history is never deleted by surprise)")
 	retentionEvery := fs.Duration("retention-every", 10*time.Minute, "how often the retention job runs")
 	settle := fs.Duration("settle", 3*time.Second, "run detectors once a trace has been quiet this long")
 	demoLive := fs.Bool("demo-live", false, "stream a simulated agent run every few seconds (demo only)")
