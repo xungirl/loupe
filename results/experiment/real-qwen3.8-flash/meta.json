@@ -1,0 +1,39 @@
+{
+  "provider": "dashscope",
+  "model": "qwen3.8-flash",
+  "arms": [
+    "A",
+    "B",
+    "C"
+  ],
+  "tasks": [
+    "t01_fizzbuzz",
+    "t02_palindrome",
+    "t03_roman_to_int",
+    "t04_int_to_roman",
+    "t05_merge_intervals",
+    "t06_two_sum",
+    "t07_brackets",
+    "t08_word_freq",
+    "t09_flatten",
+    "t10_chunk",
+    "t11_rle_encode",
+    "t12_rle_decode",
+    "t13_caesar",
+    "t14_anagrams",
+    "t15_binary_search",
+    "t16_transpose",
+    "t17_spiral",
+    "t18_common_prefix",
+    "t19_parse_duration",
+    "t20_lru_cache",
+    "t21_moving_average",
+    "t22_dedupe",
+    "t23_camel_to_snake",
+    "t24_top_k"
+  ],
+  "reps": 3,
+  "seed": 20261122,
+  "cap_cny": 4.5,
+  "is_dry_run": false
+}

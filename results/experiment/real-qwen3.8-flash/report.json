@@ -1,0 +1,820 @@
+{
+  "run_id": "real-qwen3.8-flash",
+  "provider": "dashscope",
+  "model": "qwen3.8-flash",
+  "is_dry_run": false,
+  "created_at": "2026-11-22T13:00:37",
+  "prereg": "PREREG.md",
+  "tasks": 24,
+  "arms": [
+    "A",
+    "B",
+    "C"
+  ],
+  "arm_labels": {
+    "A": "single agent",
+    "B": "single agent + restate task",
+    "C": "planner/coder/reviewer"
+  },
+  "runs_completed": 216,
+  "runs_errored": 0,
+  "runs_planned": 216,
+  "runs_recorded": 216,
+  "complete_reps": [
+    0,
+    1,
+    2
+  ],
+  "spend": {
+    "currency": "CNY",
+    "spent": 1.4156818,
+    "cap": 4.5
+  },
+  "summary_by_arm": [
+    {
+      "arm": "A",
+      "label": "single agent",
+      "n": 72,
+      "pass_rate": 0.9861111111111112,
+      "pass_ci95": [
+        0.9583333333333334,
+        1.0
+      ],
+      "mean_tokens": 4620.069444444444,
+      "mean_input_tokens": 4297.736111111111,
+      "mean_output_tokens": 322.3333333333333,
+      "mean_cost_cny": 0.004308488888888889,
+      "mean_steps": 4.611111111111111,
+      "mean_rework": 0.1527777777777778,
+      "mean_wall_s": 10.477083333333333,
+      "loop_findings": 2,
+      "rework_findings": 0
+    },
+    {
+      "arm": "B",
+      "label": "single agent + restate task",
+      "n": 72,
+      "pass_rate": 1.0,
+      "pass_ci95": [
+        1.0,
+        1.0
+      ],
+      "mean_tokens": 7523.152777777777,
+      "mean_input_tokens": 6810.361111111111,
+      "mean_output_tokens": 712.7916666666666,
+      "mean_cost_cny": 0.007372826388888889,
+      "mean_steps": 6.013888888888889,
+      "mean_rework": 0.3055555555555556,
+      "mean_wall_s": 19.484208333333335,
+      "loop_findings": 2,
+      "rework_findings": 3
+    },
+    {
+      "arm": "C",
+      "label": "planner/coder/reviewer",
+      "n": 72,
+      "pass_rate": 1.0,
+      "pass_ci95": [
+        1.0,
+        1.0
+      ],
+      "mean_tokens": 8140.652777777777,
+      "mean_input_tokens": 7367.805555555556,
+      "mean_output_tokens": 772.8472222222222,
+      "mean_cost_cny": 0.007980931944444445,
+      "mean_steps": 7.125,
+      "mean_rework": 0.18055555555555555,
+      "mean_wall_s": 25.031583333333334,
+      "loop_findings": 8,
+      "rework_findings": 1
+    }
+  ],
+  "paired": [
+    {
+      "comparison": "B-A",
+      "primary": true,
+      "metric": "pass_rate",
+      "n_tasks": 24,
+      "diff": 0.01388888888888889,
+      "ci95": [
+        0.0,
+        0.041666666666666664
+      ],
+      "wins": 1,
+      "losses": 0,
+      "ties": 23,
+      "token_ratio": 1.6680013520100831,
+      "token_ratio_ci95": [
+        1.4671499716174417,
+        1.9135844387299807
+      ]
+    },
+    {
+      "comparison": "C-A",
+      "primary": true,
+      "metric": "pass_rate",
+      "n_tasks": 24,
+      "diff": 0.01388888888888889,
+      "ci95": [
+        0.0,
+        0.041666666666666664
+      ],
+      "wins": 1,
+      "losses": 0,
+      "ties": 23,
+      "token_ratio": 1.6152610417955178,
+      "token_ratio_ci95": [
+        1.418616608151295,
+        1.8587589890168879
+      ]
+    },
+    {
+      "comparison": "C-B",
+      "primary": false,
+      "metric": "pass_rate",
+      "n_tasks": 24,
+      "diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "wins": 0,
+      "losses": 0,
+      "ties": 24,
+      "token_ratio": 0.9683811346129853,
+      "token_ratio_ci95": [
+        0.8482734124197926,
+        1.113428370693576
+      ]
+    }
+  ],
+  "per_task": [
+    {
+      "task": "t01_fizzbuzz",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 2372,
+        "steps": 3.0,
+        "rework": 0.0,
+        "trace_id": "a30099c356dcea0151cc1daa8bd38f8d"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4054,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "c7af580b1e5bc3943d1f0b7609ebe4bb"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3910,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "993a1e54cdf690f24a443ba123ef9356"
+      }
+    },
+    {
+      "task": "t02_palindrome",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3275,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "c9b7e8ebdbf5bb2be7e98ce693623a1d"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3285,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "d388791eb57b42cfa3423bbc85c2bbda"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4221,
+        "steps": 6.0,
+        "rework": 0.0,
+        "trace_id": "83c3ed867f86ab8a9fbdcce048f104b9"
+      }
+    },
+    {
+      "task": "t03_roman_to_int",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 7059,
+        "steps": 6.7,
+        "rework": 0.3,
+        "trace_id": "9d10ebc89e91a2b4ca16e76716d7debe"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 8002,
+        "steps": 6.7,
+        "rework": 0.0,
+        "trace_id": "336865f9ccfd78239ce5340471c045d6"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6381,
+        "steps": 6.7,
+        "rework": 0.0,
+        "trace_id": "59106932f9b1a786258ae0308f1f8dbf"
+      }
+    },
+    {
+      "task": "t04_int_to_roman",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4470,
+        "steps": 4.3,
+        "rework": 0.0,
+        "trace_id": "dae74f043244c3c2a0df0a8e4bc1479e"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 8381,
+        "steps": 6.7,
+        "rework": 0.0,
+        "trace_id": "510e9fe5114f8f49535debfdf2e7be8c"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6980,
+        "steps": 7.0,
+        "rework": 0.3,
+        "trace_id": "f2265a6a98079c2f40c0a931e9762f04"
+      }
+    },
+    {
+      "task": "t05_merge_intervals",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3803,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "e057d4f83011e3905231d301bef91052"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6207,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "3c2176f1b0ee53183e4728f7f1c00474"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 8157,
+        "steps": 7.7,
+        "rework": 0.0,
+        "trace_id": "8c93f2ee98c2f3b5c32194aa8ecfd230"
+      }
+    },
+    {
+      "task": "t06_two_sum",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 10172,
+        "steps": 7.3,
+        "rework": 1.0,
+        "trace_id": "c26258fae6f8a4b30ef5bf65ce5eef57"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 14142,
+        "steps": 8.3,
+        "rework": 1.7,
+        "trace_id": "1c4b3f7f8a1662e54e2b71b4310f0b78"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 19423,
+        "steps": 10.3,
+        "rework": 1.0,
+        "trace_id": "60ec76347e7b64abb48c164778be57ba"
+      }
+    },
+    {
+      "task": "t07_brackets",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3316,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "b1c112222192cb0d1fd886b674cde6bf"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5339,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "17f1773f40020d04afddcab5f39a8831"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4809,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "5ea66d8c7ed6d008181bf3960720f270"
+      }
+    },
+    {
+      "task": "t08_word_freq",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3441,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "ebcb71f0f60cee5a356a7458fd2f9d75"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5891,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "bef3d16f7d6ada0ce7d50da88a9f1d9c"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5434,
+        "steps": 6.0,
+        "rework": 0.0,
+        "trace_id": "8659f7167ffc1c2c0aa6c8c8b3bec181"
+      }
+    },
+    {
+      "task": "t09_flatten",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3412,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "2d9fe60e6e243ff447c2e0c8b2d48e39"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 8530,
+        "steps": 7.0,
+        "rework": 0.7,
+        "trace_id": "4028c5dbc49cde41c3dca5bdb517c5fb"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5217,
+        "steps": 6.3,
+        "rework": 0.0,
+        "trace_id": "a279e4b3621f0d183bb35f59b0df57e2"
+      }
+    },
+    {
+      "task": "t10_chunk",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3599,
+        "steps": 4.7,
+        "rework": 0.0,
+        "trace_id": "b4b5000ee09adb9f0b07235f3d6d5c33"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5921,
+        "steps": 5.7,
+        "rework": 0.3,
+        "trace_id": "b17a866d0e7d554a839dccfb88bcbb43"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3522,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "1c17ad70985a0f18b6af023be0ce8cf4"
+      }
+    },
+    {
+      "task": "t11_rle_encode",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3411,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "751fac4ddbbcedc0793ca86b6aa0edc9"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4675,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "9ecf4170592160e9e9958997e8e83da8"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4287,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "316b315b8dad8701c61ae3d181bee973"
+      }
+    },
+    {
+      "task": "t12_rle_decode",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3518,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "42fc9e9e951f3f9c9574dc227dec6598"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 9931,
+        "steps": 7.7,
+        "rework": 0.0,
+        "trace_id": "1a7943edce999f8fa5bc443dbefcb53b"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5857,
+        "steps": 6.3,
+        "rework": 0.0,
+        "trace_id": "6317a915c80e1e5a97b5e1735eaf5dab"
+      }
+    },
+    {
+      "task": "t13_caesar",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 2860,
+        "steps": 3.7,
+        "rework": 0.0,
+        "trace_id": "de105a7575ab64d9c7db13f4f96935ff"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5285,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "57f704f6f7c692d6467dc9569c239a2b"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4895,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "ce585786b23849d88a5b35ce8c7b973d"
+      }
+    },
+    {
+      "task": "t14_anagrams",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3387,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "914dadcb6ba462e95a12b4b1973e39f2"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 9749,
+        "steps": 7.7,
+        "rework": 1.7,
+        "trace_id": "cad57f975c2a8d1bdae47bae2b51e915"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5865,
+        "steps": 6.7,
+        "rework": 0.0,
+        "trace_id": "f603ec889b78d0839ae2c5f2a5450104"
+      }
+    },
+    {
+      "task": "t15_binary_search",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3531,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "135088913693394fcc6a7adce59430f2"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6730,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "98684648832c28bcfc16730c719b6959"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 11232,
+        "steps": 8.7,
+        "rework": 0.3,
+        "trace_id": "af888a3e620b8c89f0f94c264c9d8423"
+      }
+    },
+    {
+      "task": "t16_transpose",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3176,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "5a9b1375c7a1078a805ed6e0df70814a"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4892,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "bdc1cdff02c0393c9538f7dc958e196d"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3602,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "b0e88bb930c6ee67fc144e1513dab586"
+      }
+    },
+    {
+      "task": "t17_spiral",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3950,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "c95ed0cb0511b36cb4e03132df80af3d"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5653,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "77d3e837614d757cfcb6d1069a06fa69"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 7010,
+        "steps": 7.0,
+        "rework": 0.0,
+        "trace_id": "b967a2b80472dea177c9b9993f8112ed"
+      }
+    },
+    {
+      "task": "t18_common_prefix",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3199,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "fb8955b917793a04045b2f5e61dda4b6"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4507,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "1ac91c765fe5dec9560ba02d26121dce"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3712,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "aa16185bc40e60a2adfcf760367edcff"
+      }
+    },
+    {
+      "task": "t19_parse_duration",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 5371,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "39b545f5249c8c4dbe044d58a76cb251"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 20498,
+        "steps": 10.7,
+        "rework": 2.3,
+        "trace_id": "0304f2666dd7158bfbb7457d409ff4e9"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 19723,
+        "steps": 11.3,
+        "rework": 1.7,
+        "trace_id": "c59b9b0f2a39cd73f29929765ff57fc7"
+      }
+    },
+    {
+      "task": "t20_lru_cache",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3767,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "d82e974f0e05a6df4f4d70e17743e1ee"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6777,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "b19c6eaf9907c32182dfe199f65a4fcd"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 8935,
+        "steps": 7.3,
+        "rework": 0.3,
+        "trace_id": "f88f08ede88d4c78fbadb8709761ce97"
+      }
+    },
+    {
+      "task": "t21_moving_average",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3622,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "1f578306eb8c3c3d6366e8e6575c4a5a"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 6464,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "18929fd0a0c71ebe3418e67dcf240729"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4529,
+        "steps": 5.7,
+        "rework": 0.0,
+        "trace_id": "397166d73dae3172e1979f1100b090f0"
+      }
+    },
+    {
+      "task": "t22_dedupe",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3263,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "935437dd715ca17915dbc2aa71f69c11"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4069,
+        "steps": 4.7,
+        "rework": 0.0,
+        "trace_id": "42ea127fc53059c4720f3351277a8ec6"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3647,
+        "steps": 5.3,
+        "rework": 0.0,
+        "trace_id": "db95af5a70a4bebe722d553e536d0f17"
+      }
+    },
+    {
+      "task": "t23_camel_to_snake",
+      "A": {
+        "passed": false,
+        "pass_rate": 0.6666666666666666,
+        "tokens": 19541,
+        "steps": 12.0,
+        "rework": 2.3,
+        "trace_id": "54add650d2ab5b06685e3385750c107e"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 16721,
+        "steps": 8.7,
+        "rework": 0.7,
+        "trace_id": "b0fd673f37936c11707cd12adeff1720"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 36409,
+        "steps": 17.0,
+        "rework": 0.7,
+        "trace_id": "ab80d9ecfb4d85e25779221a667d8702"
+      }
+    },
+    {
+      "task": "t24_top_k",
+      "A": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 3367,
+        "steps": 4.0,
+        "rework": 0.0,
+        "trace_id": "54fbc1db02307478add0aa4d918e2605"
+      },
+      "B": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 4852,
+        "steps": 5.0,
+        "rework": 0.0,
+        "trace_id": "fa4520151fc86d39eb0d31d5d8b990f1"
+      },
+      "C": {
+        "passed": true,
+        "pass_rate": 1.0,
+        "tokens": 7617,
+        "steps": 7.7,
+        "rework": 0.0,
+        "trace_id": "41e06b7be5094463d455719b1153e60e"
+      }
+    }
+  ],
+  "planning_estimate": {
+    "label": "Planning figure only: mean tokens per run from THIS run, priced at \u00a50.8/M input and \u00a52.7/M output.",
+    "tokens_per_run_by_arm": {
+      "A": {
+        "input": 4297.736111111111,
+        "output": 322.3333333333333
+      },
+      "B": {
+        "input": 6810.361111111111,
+        "output": 712.7916666666666
+      },
+      "C": {
+        "input": 7367.805555555556,
+        "output": 772.8472222222222
+      }
+    },
+    "projected_cost_cny": 1.4156818000000002
+  },
+  "notes": []
+}

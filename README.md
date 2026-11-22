@@ -28,10 +28,13 @@ All measured on an Apple M2 laptop (8 cores), localhost, 2026-11-22; see
 | Full aggregate stats at 1.02M spans | p50 2.28 s (known weak spot: full scans) | HTTP, 30 requests × 3 runs | `results/bench/query.jsonl` |
 | Claude Code importer | 48.6 ± 2.8 MB/s with SQLite writes; 113.0 ± 3.4 MB/s parse-only | 86.3 MB synthetic transcripts, 3 runs each | `results/bench/import.jsonl` |
 | Detectors, held-out synthetic split | macro-F1 0.803 (error_streak 1.00, budget 0.88, rework 0.85, loop 0.73, stuck 0.56) | 150 test traces, thresholds tuned on train only | `results/detectors/test.txt` |
+| Harness experiment (real model) | pass rate A 0.986 / B 1.000 / C 1.000; B−A and C−A +0.014, 95% CI [0, +0.042] (inconclusive); token ratio B/A 1.67 [1.47, 1.91], C/A 1.62 [1.42, 1.86] | 24 tasks × 3 arms × 3 reps, paired bootstrap over tasks, preregistered | `results/experiment/real-qwen3.8-flash/report.json` |
 | Tests | 13 Go test packages (race detector, 5x), 28 pytest, 50 Vitest, 10 Playwright — all passing from a fresh clone | `make test`, `make e2e` | "Verification" below |
 
-The harness experiment is **prepared, not run**: the only experiment numbers
-in this repo come from a fake scripted model and are labelled as a dry run.
+The preregistered harness experiment **ran on a real model** (qwen3.8-flash,
+216 runs, ¥1.42 of a ¥4.50 cap): on these easy tasks the harness made no
+detectable difference to pass rate, but restate-first and multi-agent cost
+**1.6–1.7x the tokens**. Details in [The experiment](#the-experiment).
 
 
 ## Project Journey
@@ -192,11 +195,36 @@ Any OpenTelemetry exporter configured for OTLP/HTTP **JSON** pointing at
 
 ## The experiment
 
-`PREREG.md` (hypotheses, analysis, ¥4.50 cap — committed before any real run),
-`EXPERIMENT.md` (how to run it: `make experiment` with `DASHSCOPE_API_KEY`
-or `LOUPE_KEYFILE`, then `make experiment-report`). The committed
-`results/experiment/dryrun-fake/` is a pipeline dry run with a scripted fake
-model; its numbers are not results.
+`PREREG.md` fixed the hypotheses, task set, analysis and a ¥4.50 cap before
+any real run; `EXPERIMENT.md` explains how to rerun it (`make experiment`,
+then `make experiment-report`).
+
+**Run (2026-11-22):** qwen3.8-flash via DashScope, 24 Python tasks with
+hidden tests × 3 arms × 3 repetitions = **216/216 runs**, 1,278 model calls,
+**¥1.4157** spent (`results/experiment/real-qwen3.8-flash/ledger.json`). Every
+run was traced into Loupe (3,095 spans; the detectors raised 18 findings).
+
+| arm | pass rate (95% CI) | mean tokens / run | mean steps | rework (extra rewrites of the solution) |
+|---|---|---|---|---|
+| A single agent | 0.986 [0.958, 1.000] | 4,620 | 4.6 | 0.15 |
+| B single agent + restate task first | 1.000 [1.000, 1.000] | 7,523 | 6.0 | 0.31 |
+| C planner / coder / reviewer | 1.000 [1.000, 1.000] | 8,141 | 7.1 | 0.18 |
+
+| preregistered test | result | verdict (prereg rule) |
+|---|---|---|
+| H1: B passes more than A | +0.014, paired 95% CI [0, +0.042], 1 win / 0 losses / 23 ties | **inconclusive** (CI touches 0) |
+| H2: C passes more than A | +0.014, CI [0, +0.042], 1/0/23 | **inconclusive** |
+| H3a: B costs little extra (B/A ≤ 1.3) | token ratio **1.67** [1.47, 1.91] | **not supported** — restating costs ~67% more |
+| H3b: C costs much more (C/A > 1.5) | 1.62 [1.42, 1.86] | point estimate above 1.5, CI not entirely above it |
+
+**What it means.** The prereg anticipated a ceiling effect, and it happened:
+the single agent already solves 98.6% of these tasks, so neither harness
+change can show a benefit — they only cost tokens. Restating the task did
+*not* reduce rework here (descriptively it went 0.15 → 0.31). The honest
+claim is "on easy tasks the harness doesn't matter, it only costs ~1.6x";
+testing the restate idea properly needs harder tasks (next steps).
+Source: `results/experiment/real-qwen3.8-flash/report.md` / `report.json`;
+the earlier `dryrun-fake/` folder is the fake-model pipeline check.
 
 ## Design decisions and trade-offs
 
@@ -228,11 +256,13 @@ model; its numbers are not results.
 * `202 Accepted` spans live in memory until committed; a crash (not a
   graceful stop) loses at most one queue's worth.
 * All benchmarks are single-machine localhost runs on a shared laptop.
-* The harness experiment has **not** been run with a real model yet.
+* The experiment hit a ceiling (A = 98.6%): it can't detect harness benefits on
+  these tasks, only costs. One model, one task family.
 
 ## Next steps
 
-1. Run the preregistered experiment (`make experiment`) and publish the report.
+1. Rerun the experiment on harder tasks (multi-file repos, SWE-bench-style) so the
+   harness arms aren't at ceiling.
 2. Import my own Claude Code history; hand-label a sample to measure detectors on real data.
 3. OTLP protobuf/gRPC; a columnar backend (ClickHouse) behind the `store` interface.
 4. Semantic progress signals for the stuck detector (e.g. tests passing over time).
