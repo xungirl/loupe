@@ -8,3 +8,5 @@ Times are PST (America/Los_Angeles).
 - 2026-11-22 02:17 — stage 2 done (tag stage-2): importer + hook adapter + docs/hooks.md. Python pinned to 3.15 via .python-version (uv had defaulted to 3.13).
 - 2026-11-22 02:18 — stage 3 done (tag stage-3): cost table + config/prices.json, /metrics, retention, shutdown integration test.
 - 2026-11-22 02:23 — stage 4 done (tag stage-4): detectors + corpus. Held-out test macro-F1 0.803 (results/detectors/test.txt). Two tuning rounds on train only, documented in results/detectors/README.md.
+- 2026-11-22 02:37 — stages 6+7 done (tags stage-6, stage-7): SDK/agent/providers/ledger + PREREG + experiment pipeline + full dry run. Web UI being built by a helper agent in web/ (uncommitted until it reports back). NOTE: never run `make experiment` here (would call a paid API if a key were present; key env vars are unset on this machine).
+- 2026-11-22 02:43 — Makefile demo/test targets, bench script, INTERVIEW.md draft committed. Waiting for web UI before running benchmarks (keep the machine quiet while benchmarking).
