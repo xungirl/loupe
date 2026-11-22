@@ -28,7 +28,7 @@ All measured on an Apple M2 laptop (8 cores), localhost, 2026-11-22; see
 | Full aggregate stats at 1.02M spans | p50 2.28 s (known weak spot: full scans) | HTTP, 30 requests × 3 runs | `results/bench/query.jsonl` |
 | Claude Code importer | 48.6 ± 2.8 MB/s with SQLite writes; 113.0 ± 3.4 MB/s parse-only | 86.3 MB synthetic transcripts, 3 runs each | `results/bench/import.jsonl` |
 | Detectors, held-out synthetic split | macro-F1 0.803 (error_streak 1.00, budget 0.88, rework 0.85, loop 0.73, stuck 0.56) | 150 test traces, thresholds tuned on train only | `results/detectors/test.txt` |
-| Tests | Go 14 packages (race, 5x), 28 pytest, 50 vitest, 10 Playwright | `make test`, `make e2e` | this README, bottom |
+| Tests | 13 Go test packages (race detector, 5x), 28 pytest, 50 Vitest, 10 Playwright — all passing from a fresh clone | `make test`, `make e2e` | "Verification" below |
 
 The harness experiment is **prepared, not run**: the only experiment numbers
 in this repo come from a fake scripted model and are labelled as a dry run.
@@ -145,7 +145,7 @@ timeline: ![](docs/screenshots/journey.png)
 
 ## Quickstart
 
-Requirements: Go ≥ 1.22, Node ≥ 20, [uv](https://docs.astral.sh/uv/).
+Requirements: Go 1.27 (per `server/go.mod`), Node (built here with 25), [uv](https://docs.astral.sh/uv/) (Python 3.15 pinned in `.python-version`). Verified only on macOS / Apple Silicon.
 
 ```bash
 make demo            # builds everything, seeds demo data, serves http://127.0.0.1:7070
@@ -250,3 +250,19 @@ model; its numbers are not results.
 | `results/` | benchmark raw outputs, detector evaluation, experiment dry run |
 | `docs/` | hooks guide, screenshots |
 | `PREREG.md` · `EXPERIMENT.md` · `BENCHMARK.md` · `INTERVIEW.md` (中文) · `PROGRESS_LOG.md` | |
+
+## Verification (stage 10, 2026-11-22)
+
+From a fresh `git clone` of this repo into a temp directory:
+
+* `make test` → exit 0: 13 Go packages `ok` under `go test -race -count=5 ./...`,
+  `28 passed` (pytest), `50 passed` (Vitest).
+* `make e2e` → `10 passed` (Playwright, own server on a freshly seeded DB).
+* `make demo PORT=7071` → UI served, 197 traces (120 synthetic, 4 Claude Code
+  fixtures, 72 experiment dry-run traces, plus live demo runs), 1 experiment
+  report; then stopped.
+* `git log -p --all` scanned for key-like strings (`sk-…`, `AKIA…`, `AIza…`,
+  `ghp_…`, private-key headers, long bearer tokens): only the fake test
+  values `sk-test-123`, `sk-from-env`, `sk-from-file` and CSS class names
+  like `task-matrix`. No tracked `.env`/key files. No `Co-Authored-By` lines.
+* No Loupe/Vite/Playwright processes left running.
