@@ -1,0 +1,12 @@
+split=train traces=150 clean=49
+detector        TP   FP   FN   TN  precision recall     F1
+loop            19   11    1  119      0.633  0.950  0.760
+rework          18    0    7  125      1.000  0.720  0.837
+error_streak    29    0    0  121      1.000  1.000  1.000
+stuck           15    9    3  123      0.625  0.833  0.714
+budget_burn     18    5    4  123      0.783  0.818  0.800
+macro-F1 0.822
+  loop: missed=map[] fp_from=map[budget_burn:1 clean:2 error_streak:3 rework:2 stuck:4]
+  rework: missed=map[rework:single-file:4:2 rework:two-files:5] fp_from=map[]
+  stuck: missed=map[stuck:with-notes:3] fp_from=map[budget_burn:2 clean:1 error_streak:3 loop:5]
+  budget_burn: missed=map[] fp_from=map[loop:2 rework:1 stuck:2]

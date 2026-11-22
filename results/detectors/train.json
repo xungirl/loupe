@@ -1,0 +1,83 @@
+{
+  "split": "train",
+  "traces": 150,
+  "clean": 49,
+  "scores": [
+    {
+      "detector": "loop",
+      "tp": 19,
+      "fp": 11,
+      "fn": 1,
+      "tn": 119,
+      "precision": 0.6333333333333333,
+      "recall": 0.95,
+      "f1": 0.7599999999999999,
+      "fp_from_labels": {
+        "budget_burn": 1,
+        "clean": 2,
+        "error_streak": 3,
+        "rework": 2,
+        "stuck": 4
+      }
+    },
+    {
+      "detector": "rework",
+      "tp": 18,
+      "fp": 0,
+      "fn": 7,
+      "tn": 125,
+      "precision": 1,
+      "recall": 0.72,
+      "f1": 0.8372093023255813,
+      "missed_variants": {
+        "rework:single-file:4": 2,
+        "rework:two-files": 5
+      }
+    },
+    {
+      "detector": "error_streak",
+      "tp": 29,
+      "fp": 0,
+      "fn": 0,
+      "tn": 121,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    {
+      "detector": "stuck",
+      "tp": 15,
+      "fp": 9,
+      "fn": 3,
+      "tn": 123,
+      "precision": 0.625,
+      "recall": 0.8333333333333334,
+      "f1": 0.7142857142857143,
+      "missed_variants": {
+        "stuck:with-notes": 3
+      },
+      "fp_from_labels": {
+        "budget_burn": 2,
+        "clean": 1,
+        "error_streak": 3,
+        "loop": 5
+      }
+    },
+    {
+      "detector": "budget_burn",
+      "tp": 18,
+      "fp": 5,
+      "fn": 4,
+      "tn": 123,
+      "precision": 0.782608695652174,
+      "recall": 0.8181818181818182,
+      "f1": 0.8,
+      "fp_from_labels": {
+        "loop": 2,
+        "rework": 1,
+        "stuck": 2
+      }
+    }
+  ],
+  "macro_f1": 0.8222990033222591
+}

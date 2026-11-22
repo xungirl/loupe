@@ -21,3 +21,4 @@ results/experiment/real-*/
 *.key
 keyfile*
 .DS_Store
+results/corpus/*.jsonl
