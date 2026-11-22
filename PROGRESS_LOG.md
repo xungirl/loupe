@@ -10,3 +10,4 @@ Times are PST (America/Los_Angeles).
 - 2026-11-22 02:23 — stage 4 done (tag stage-4): detectors + corpus. Held-out test macro-F1 0.803 (results/detectors/test.txt). Two tuning rounds on train only, documented in results/detectors/README.md.
 - 2026-11-22 02:37 — stages 6+7 done (tags stage-6, stage-7): SDK/agent/providers/ledger + PREREG + experiment pipeline + full dry run. Web UI being built by a helper agent in web/ (uncommitted until it reports back). NOTE: never run `make experiment` here (would call a paid API if a key were present; key env vars are unset on this machine).
 - 2026-11-22 02:43 — Makefile demo/test targets, bench script, INTERVIEW.md draft committed. Waiting for web UI before running benchmarks (keep the machine quiet while benchmarking).
+- 2026-11-22 02:49 — stage 5 done (tag stage-5): web UI built by a helper agent (50 vitest, 10 playwright, 8 screenshots), committed.

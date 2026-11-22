@@ -56,7 +56,7 @@ type Span struct {
 	StartNS int64 `json:"start_ns"`
 	EndNS   int64 `json:"end_ns"`
 
-	Status   string `json:"status,omitempty"`
+	Status   string `json:"status"`
 	ErrorMsg string `json:"error_msg,omitempty"`
 
 	// LLM fields.
