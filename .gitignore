@@ -14,8 +14,6 @@ __pycache__/
 .venv/
 .pytest_cache/
 *.egg-info/
-# experiment state with real-model outputs stays local until reviewed
-results/experiment/real-*/
 # secrets
 .env
 *.key
