@@ -1,0 +1,7 @@
+data
+bin
+web/node_modules
+web/dist
+results
+.venv
+**/__pycache__
