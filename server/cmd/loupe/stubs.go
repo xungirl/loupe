@@ -11,8 +11,6 @@ import (
 
 var errTODO = errors.New("not implemented yet")
 
-func runImportClaude(args []string) error   { return errTODO }
-func runIngestFile(args []string) error     { return errTODO }
 func runCorpus(args []string) error         { return errTODO }
 func runEvalDetectors(args []string) error  { return errTODO }
 func runDetectAll(args []string) error      { return errTODO }
